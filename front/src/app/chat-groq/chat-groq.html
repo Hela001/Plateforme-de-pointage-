@@ -1,0 +1,134 @@
+<div class="chat-container">
+
+  <!-- Sidebar -->
+  <aside class="sidebar" aria-label="Historique des conversations">
+    <button class="new-chat-btn" type="button" (click)="startNewChat()">
+      + Nouveau chat
+    </button>
+
+    <ul class="chat-list">
+      <li *ngFor="let chat of chatHistory"
+          (click)="switchChat(chat.id)"
+          [class.active]="chat.id === currentChatId"
+          role="button"
+          tabindex="0">
+
+        <span class="chat-title">{{ chat.title }}</span>
+
+        <button type="button"
+                class="delete-btn"
+                (click)="deleteChat(chat.id, $event)"
+                aria-label="Supprimer ce chat"
+                title="Supprimer">
+         <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24" width="16" height="16">
+  <line x1="6" y1="6" x2="18" y2="18" stroke="#ff4d4f" stroke-width="2" stroke-linecap="round"/>
+  <line x1="6" y1="18" x2="18" y2="6" stroke="#ff4d4f" stroke-width="2" stroke-linecap="round"/>
+</svg>
+
+        </button>
+
+      </li>
+    </ul>
+  </aside>
+
+  <!-- Chat Box -->
+  <section class="chat-box" *ngIf="currentChatId !== null" aria-label="Zone de conversation">
+
+    <!-- Messages -->
+    <div class="messages" #messagesContainer>
+      <div *ngFor="let msg of messages"
+           class="chat-message"
+           [ngClass]="msg.role + '-message'">
+
+        <div class="avatar-container">
+          <img 
+            [src]="msg.role === 'user' ? 'assets/images/user.jpg' : 'assets/images/bot.png'"
+            [alt]="msg.role === 'user' ? 'Avatar utilisateur' : 'Avatar assistant'"
+            class="avatar"
+          />
+        </div>
+
+        <div class="message-content">
+          <div class="message-header">
+            <strong>{{ msg.role === 'user' ? 'Moi :' : 'GroqBot :' }}</strong>
+            <span class="timestamp">{{ msg.timestamp | date:'shortTime' }}</span>
+          </div>
+
+          <!-- Texte avec emojis -->
+          <div class="message-text" [innerHTML]="msg.content | emoji"></div>
+
+          <!-- Bouton de téléchargement -->
+          <button *ngIf="msg.fileName"
+                  class="download-btn"
+                  type="button"
+                  (click)="downloadFile(msg)">
+            📂 Télécharger {{ msg.fileName }}
+          </button>
+
+          <!-- Détails assistant -->
+          <div *ngIf="msg.role === 'assistant'" class="assistant-details">
+
+            <div *ngIf="msg.provenance?.length">
+              <strong>📌 Provenance :</strong>
+              <ul>
+                <li *ngFor="let p of msg.provenance">{{ p }}</li>
+              </ul>
+            </div>
+
+            <div *ngIf="msg.dates_found?.length">
+              <strong>📅 Dates trouvées :</strong>
+              <ul>
+                <li *ngFor="let d of msg.dates_found">{{ d }}</li>
+              </ul>
+            </div>
+
+            <div *ngIf="msg.times_found?.length">
+              <strong>⏰ Heures trouvées :</strong>
+              <ul>
+                <li *ngFor="let t of msg.times_found">{{ t }}</li>
+              </ul>
+            </div>
+
+            <div *ngIf="msg.warnings?.length" class="warnings">
+              <strong>⚠️ Avertissements :</strong>
+              <ul>
+                <li *ngFor="let w of msg.warnings">{{ w }}</li>
+              </ul>
+            </div>
+
+            <div *ngIf="msg.contact_hr" class="contact-hr">
+              <button type="button" (click)="contactAdvisor()">
+                Contacter un conseiller RH
+              </button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Zone de saisie -->
+    <div class="input-area">
+      <input type="text"
+             [(ngModel)]="userInput"
+             placeholder="Écris ton message…"
+             (keyup.enter)="sendMessage()"
+             [disabled]="isLoading"
+             aria-label="Saisir un message" />
+
+      <input type="file"
+             (change)="onFileSelected($event)"
+             aria-label="Joindre un fichier" />
+
+      <button type="button"
+              (click)="sendMessage()"
+              [disabled]="isLoading || (!userInput.trim() && !selectedFile)">
+        Envoyer
+      </button>
+    </div>
+
+    <p *ngIf="isLoading" class="loading">
+      ⏳ GroqBot réfléchit…
+    </p>
+  </section>
+</div>

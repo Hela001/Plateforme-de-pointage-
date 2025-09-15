@@ -1,0 +1,80 @@
+/* Table améliorée */
+.table {
+  th {
+    white-space: nowrap;
+    position: sticky;
+    top: 0;
+    background-color: #343a40;
+    color: white;
+    z-index: 2;
+  }
+
+  td {
+    vertical-align: middle;
+  }
+
+  &.table-hover tbody tr:hover {
+    background-color: #f1f1f1;
+  }
+}
+
+/* Images réduites */
+.img-thumbnail {
+  max-height: 100px;
+  object-fit: cover;
+}
+
+/* Blocs de texte (ex: JSON ou logs) */
+pre {
+  background-color: #f8f9fa;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  margin-bottom: 0;
+  font-size: 0.8rem;
+  font-family: 'Courier New', Courier, monospace;
+  overflow-x: auto;
+}
+
+/* Modal personnalisé */
+.modal.show {
+  display: block;
+  z-index: 1050;
+  background-color: rgba(0, 0, 0, 0.5); // fond noir semi-transparent
+}
+
+.modal-content {
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Alerte de fraude */
+.alert-danger {
+  animation: blink 1s step-start 0s infinite;
+  border: 2px solid #dc3545;
+}
+
+/* Effet clignotant rouge pour attirer l'attention */
+@keyframes blink {
+  50% {
+    opacity: 0.6;
+  }
+}
+
+/* Boutons actifs */
+.btn.active {
+  font-weight: bold;
+  border: 2px solid #0d6efd;
+  background-color: #e7f1ff;
+}
+
+/* Responsive ajustements */
+@media (max-width: 768px) {
+  .table td {
+    font-size: 0.9rem;
+  }
+
+  .modal-dialog {
+    max-width: 95%;
+    margin: auto;
+  }
+}

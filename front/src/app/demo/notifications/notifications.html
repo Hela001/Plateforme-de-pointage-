@@ -1,0 +1,75 @@
+<div class="p-4">
+  <h2 class="text-xl font-bold mb-4">📢 Notifications</h2>
+
+  <div *ngIf="loading" class="text-gray-500">Chargement...</div>
+
+  <div *ngIf="!loading && notifications.length === 0" class="text-gray-600">
+    Aucune notification.
+  </div>
+
+  <div *ngIf="!loading && notifications.length > 0">
+    <table class="min-w-full border border-gray-300">
+      <thead class="bg-gray-100">
+        <tr>
+          <th class="border p-2">Utilisateur</th>
+          <th class="border p-2">Date</th>
+          <th class="border p-2">Heure</th>
+          <th class="border p-2">Statut</th>
+          <th class="border p-2">Message</th>
+          <th class="border p-2">Adresse</th>
+          <th class="border p-2">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let notif of notifications">
+       <td data-label="Utilisateur">{{ notif.username }}</td>
+          <td class="border p-2">{{ notif.date | date: 'yyyy-MM-dd' }}</td>
+          <td class="border p-2">{{ notif.heure | date: 'HH:mm:ss' }}</td>
+          <td class="border p-2">
+            <span [ngClass]="{
+              'text-darkred': notif.statut === 'depart_non_autorise',
+              'text-red-600': notif.statut === 'absent'
+            }">
+              {{ notif.statut }}
+            </span>
+          </td>
+          <td class="border p-2">{{ notif.message }}</td>
+          <td class="border p-2">{{ notif.adresse }}</td>
+          <td class="border p-2">
+            <button class="btn btn-sm btn-info" (click)="openDetails(notif.id!)">
+              Voir détail
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Modale Détails Notification -->
+<div
+  class="modal fade show"
+  *ngIf="selectedNotification"
+  style="display: block; background: rgba(0,0,0,0.5);"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content p-3">
+      <div class="modal-header">
+        <h5>Détails Notification</h5>
+        <button type="button" class="btn-close" (click)="closeDetails()"></button>
+      </div>
+      <div class="modal-body">
+        <p><strong>Utilisateur :</strong> {{ selectedNotification.username }}</p>
+        <p><strong>Date :</strong> {{ selectedNotification.date | date:'yyyy-MM-dd' }}</p>
+        <p><strong>Heure :</strong> {{ selectedNotification.heure | date:'HH:mm:ss' }}</p>
+        <p><strong>Statut :</strong> {{ selectedNotification.statut }}</p>
+        <p><strong>Message :</strong> {{ selectedNotification.message }}</p>
+        <p><strong>Rôle :</strong> {{ selectedNotification.role }}</p>
+        <p><strong>Adresse :</strong> {{ selectedNotification.adresse }}</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" (click)="closeDetails()">Fermer</button>
+      </div>
+    </div>
+  </div>
+</div>

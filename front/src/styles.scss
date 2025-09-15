@@ -1,0 +1,280 @@
+/* You can add global styles to this file, and also import other style files */
+
+/**======================================================================
+=========================================================================
+Template Name: Gradient Able Admin Template
+Author: Codedscss/themes
+supports: https://codedscss/themes.com/submit-ticket/
+File: style.css
+=========================================================================
+=========================================================================
+  == Table of Contents==
+	- Generic classes
+		-	Margin, Padding, Font class, text align, position, floating, overflow, background class, text color, display class, boarder class
+	- Theme Elements
+		-	Accordion, Button, tabs, typography, buttons, box shadow, Lable & Badges, Alert, Pagination, Breadcumb, Cards, Collapse,
+        -   Carousel, Grid, Progress, Model, tooltip, popover, Datepicker, Gridstack, lightbox, notification, Nestable, pnotify, rating,
+        -   Rangeslider, Slider, Syntax Highlighter, Tour, Treeview, Toolbar, Session Timeout, Session idle Timeout, offline, Animation
+    - Forms
+        -   Forms Elements, Advance Form Control, Validation, Masking, Wizard, Picker, Select
+	- Pages
+		-   authentication, Maintenance, Maps, Landing page messages, task, Todo, Notes, Charts, Icons, Gallery, Editors,
+        -   Invoice, Full Calender, File Upload,
+=================================================================================
+=================================================================================== */
+
+// Theme Font
+@import 'scss/themes/font/theme-font';
+
+// main framework
+@import 'node_modules/bootstrap/scss/functions';
+@import 'node_modules/bootstrap/scss/variables';
+@import 'scss/settings/custom-variables';
+@import 'scss/settings/theme-variables';
+
+// bootstrap
+@import 'node_modules/bootstrap/scss/bootstrap';
+@import 'node_modules/bootstrap/scss/mixins';
+@import 'node_modules/bootstrap/scss/utilities';
+@import 'node_modules/bootstrap/scss/utilities/api';
+@import '../node_modules/bootstrap/dist/css/bootstrap.css';
+@import 'scss/themes/general';
+@import 'scss/themes/generic';
+@import 'scss/themes/minixs/function';
+
+// icon
+@import 'scss/themes/font/datta-icon';
+@import 'scss/themes/font/feather';
+@import 'scss/themes/font/fontawesome';
+@import 'scss/themes/font/flaticon';
+
+// component
+@import 'scss/themes/component/component';
+
+// theme layouts
+@import 'scss/themes/layouts/pc-footer.scss';
+@import 'scss/themes/layouts/menu-lite';
+@import 'scss/themes/layouts/menu-ng';
+
+// dashboard
+@import 'scss/themes/pages/dashboard.scss';
+@import 'scss/themes/pages/authentication';
+
+@import 'scss/themes/chat/chat';
+
+// custom
+@import 'scss/themes/custom';
+.chat-container {
+  display: flex;
+  height: 100vh;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #fff;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 250px;
+  border-right: 1px solid #ddd;
+  background: #f9f9f9;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+
+  .new-chat-btn {
+    width: 100%;
+    padding: 10px 14px;
+    margin-bottom: 12px;
+    border: none;
+    background-color: #4a90e2;
+    color: white;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+
+    &:hover {
+      background-color: #357ab8;
+      transform: translateY(-1px);
+    }
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex: 1;
+    overflow-y: auto;
+
+    li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 12px;
+      margin-bottom: 6px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.2s;
+
+      &:hover {
+        background-color: #e1f0ff;
+      }
+
+      &.active {
+        background-color: #d0e7ff;
+        font-weight: 600;
+      }
+
+      .chat-title {
+        flex: 1;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        margin-right: 8px;
+      }
+
+    .delete-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #ff4d4f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s;
+  padding: 2px;
+
+  svg.icon {
+    width: 16px;
+    height: 16px;
+    pointer-events: none;
+  }
+
+  &:hover { color: #d9363e; }
+}
+
+    }
+  }
+}
+
+/* Chat Box */
+.chat-box {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+}
+
+.messages {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.chat-message {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.user-message {
+  flex-direction: row-reverse;
+}
+
+.avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.message-content {
+  background: #e1f5fe;
+  padding: 12px;
+  border-radius: 12px;
+  max-width: 70%;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  transition: background 0.2s;
+}
+
+.user-message .message-content {
+  background: #d0f0c0;
+  color: #065f46;
+}
+
+.message-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: #555;
+  margin-bottom: 6px;
+}
+
+.timestamp {
+  font-size: 0.75rem;
+  color: #888;
+}
+
+.message-text {
+  max-height: 200px;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  font-size: 0.95rem;
+}
+
+.download-btn {
+  background: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 10px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  margin-top: 6px;
+  transition: background 0.2s;
+  &:hover { background: #0056b3; }
+}
+
+.assistant-details { margin-top: 8px; }
+.warnings { color: #d9534f; margin-top: 6px; }
+
+.input-area {
+  display: flex;
+  padding: 12px;
+  border-top: 1px solid #eee;
+  gap: 10px;
+}
+
+input[type='text'] {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 0.95rem;
+}
+
+button {
+  background: #4a90e2;
+  color: #fff;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s, transform 0.1s;
+  &:hover { background: #357ab8; transform: translateY(-1px); }
+  &:disabled { background: #6c757d; cursor: not-allowed; }
+}
+
+.loading {
+  text-align: center;
+  padding: 10px;
+  font-style: italic;
+  color: #555;
+}

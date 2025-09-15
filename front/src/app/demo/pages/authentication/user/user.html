@@ -1,0 +1,157 @@
+<form (ngSubmit)="onSubmit()" enctype="multipart/form-data" novalidate>
+  <div class="auth-wrapper">
+    <div class="auth-content">
+      <div class="card">
+        <div class="row align-items-center text-center">
+          <div class="col-md-12">
+            <div class="card-body">
+              <h4 class="mb-3 f-w-400">Add New Employee</h4>
+              <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">
+                  <i class="feather icon-user"></i>
+                </span>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Username"
+                  aria-label="Username"
+                  name="username"
+                  [(ngModel)]="user.username"
+                  required
+                />
+              </div>
+              <div *ngIf="errors['username']" class="text-danger small mb-3">
+                {{ errors['username'] }}
+              </div>
+
+            
+              <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon2">
+                  <i class="feather icon-mail"></i>
+                </span>
+                <input
+                  type="email"
+                  class="form-control"
+                  placeholder="Email address"
+                  aria-label="Email"
+                  name="email"
+                  [(ngModel)]="user.email"
+                  required
+                />
+              </div>
+              <div *ngIf="errors['email']" class="text-danger small mb-3">
+                {{ errors['email'] }}
+              </div>
+
+           <!-- PHONE -->
+<div class="input-group mb-3">
+  <span class="input-group-text"><i class="feather icon-phone"></i></span>
+  <input
+    type="text"
+    class="form-control"
+    placeholder="Téléphone"
+    aria-label="Téléphone"
+    name="phone"
+    [(ngModel)]="user.phone"
+    required
+  />
+</div>
+<div *ngIf="errors['phone']" class="text-danger small mb-3">
+  {{ errors['phone'] }}
+</div>
+
+<!-- ADDRESS -->
+<div class="input-group mb-3">
+  <span class="input-group-text"><i class="feather icon-map-pin"></i></span>
+  <input
+    type="text"
+    class="form-control"
+    placeholder="Adresse"
+    aria-label="Adresse"
+    name="address"
+    [(ngModel)]="user.address"
+    required
+  />
+</div>
+<div *ngIf="errors['address']" class="text-danger small mb-3">
+  {{ errors['address'] }}
+</div>
+
+              <div class="input-group mb-4">
+                <span class="input-group-text" id="basic-addon3">
+                  <i class="feather icon-lock"></i>
+                </span>
+                <input
+                  type="password"
+                  class="form-control"
+                  placeholder="Password"
+                  aria-label="Password"
+                  name="password"
+                  [(ngModel)]="user.password"
+                  required
+                />
+              </div>
+              <div *ngIf="errors['password']" class="text-danger small mb-3">
+                {{ errors['password'] }}
+              </div>
+
+              
+              <div class="input-group mb-4" *ngIf="availableRoles.length > 0">
+                <span class="input-group-text">
+                  <i class="feather icon-user-check"></i>
+                </span>
+                <select
+                  class="form-control"
+                  [(ngModel)]="user.role"
+                  name="role"
+                  required
+                >
+                  <option value="" disabled selected>Choisir un rôle</option>
+                  <option *ngFor="let role of availableRoles" [value]="role">
+                    {{ role }}
+                  </option>
+                </select>
+              </div>
+              <div *ngIf="errors['role']" class="text-danger small mb-3">
+                {{ errors['role'] }}
+              </div>
+
+        
+              <div class="input-group mb-4">
+                <span class="input-group-text">
+                  <i class="feather icon-image"></i>
+                </span>
+                <input
+                  type="file"
+                  class="form-control"
+                  (change)="onFileChange($event)"
+                  required
+                  accept="image/*"
+                />
+              </div>
+              <div *ngIf="errors['file']" class="text-danger small mb-3">
+                {{ errors['file'] }}
+              </div>
+
+             
+              <div *ngIf="errors['global']" class="alert alert-danger">
+                {{ errors['global'] }}
+              </div>
+
+              <div class="d-grid">
+                <button
+                  type="submit"
+                  class="btn btn-primary btn-block mb-4"
+                  [disabled]="availableRoles.length === 0"
+                >
+                  Register
+                </button>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

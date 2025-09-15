@@ -1,0 +1,141 @@
+<div class="container">
+  <div class="main-body">
+    <nav aria-label="breadcrumb" class="main-breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/analytics">Accueil</a></li>
+        <li class="breadcrumb-item"><a href="javascript:void(0)">Utilisateur</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Profil utilisateur</li>
+      </ol>
+    </nav>
+
+    <div class="row gutters-sm">
+   
+      <div class="col-md-4 mb-3">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex flex-column align-items-center text-center">
+              <img
+                [src]="user.photoUrl || 'assets/default-user.png'"
+                alt="Photo"
+                class="rounded-circle"
+                width="150"
+              />
+              <div class="mt-3">
+                <h4>{{ user.username }}</h4>
+                <p class="text-secondary mb-1">{{ user.role }}</p>
+                <button class="btn btn-primary btn-sm" (click)="toggleEdit()">
+                  {{ isEditing ? 'Annuler' : 'Modifier le profil' }}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="col-md-8">
+        <div class="card mb-3">
+          <div class="card-body">
+          
+        
+            <hr *ngIf="isEditing" />
+
+            <div class="row">
+              <div class="col-sm-3"><h6 class="mb-0">Email</h6></div>
+              <div class="col-sm-9 text-secondary">
+                <ng-container *ngIf="isEditing; else displayEmail">
+                  <input [(ngModel)]="user.email" class="form-control" type="email" />
+                </ng-container>
+                <ng-template #displayEmail>{{ user.email }}</ng-template>
+              </div>
+            </div>
+            <hr />
+
+          
+            <div class="row">
+              <div class="col-sm-3"><h6 class="mb-0">Téléphone</h6></div>
+              <div class="col-sm-9 text-secondary">
+                <ng-container *ngIf="isEditing; else displayPhone">
+                  <input [(ngModel)]="user.phone" class="form-control" type="text" />
+                </ng-container>
+                <ng-template #displayPhone>{{ user.phone || 'Non renseigné' }}</ng-template>
+              </div>
+            </div>
+            <hr />
+
+            <div class="row">
+              <div class="col-sm-3"><h6 class="mb-0">Adresse</h6></div>
+              <div class="col-sm-9 text-secondary">
+                <ng-container *ngIf="isEditing; else displayAddress">
+                  <input [(ngModel)]="user.address" class="form-control" type="text" />
+                </ng-container>
+                <ng-template #displayAddress>{{ user.address || 'Non renseignée' }}</ng-template>
+              </div>
+            </div>
+            <hr />
+
+ 
+            <div class="row">
+              <div class="col-sm-3"><h6 class="mb-0">Mot de passe</h6></div>
+              <div class="col-sm-9 text-secondary">
+                <ng-container *ngIf="isEditing; else displayPassword">
+                  <input
+                    [(ngModel)]="user.password"
+                    class="form-control"
+                    [type]="showPassword ? 'text' : 'password'"
+                  />
+                </ng-container>
+                <ng-template #displayPassword>
+                  <span>••••••••</span>
+                </ng-template>
+              </div>
+            </div>
+            <hr />
+
+         
+            <div *ngIf="isEditing" class="row">
+              <div class="col-sm-3"><h6 class="mb-0">Confirmer</h6></div>
+              <div class="col-sm-9 text-secondary">
+                <input
+                  [(ngModel)]="confirmPassword"
+                  class="form-control"
+                  [type]="showPassword ? 'text' : 'password'"
+                />
+                <div *ngIf="confirmPassword && !passwordsMatch()" class="text-danger mt-1">
+                  Les mots de passe ne correspondent pas.
+                </div>
+              </div>
+            </div>
+            <hr>
+                <div *ngIf="isEditing" class="row">
+              <div class="col-sm-3"><h6 class="mb-0">Photo</h6></div>
+              <div class="col-sm-9 text-secondary">
+                <input
+                  type="file"
+                  accept="image/*"
+                  (change)="onFileSelected($event)"
+                  class="form-control"
+                />
+                <div *ngIf="selectedPhoto" class="text-success mt-1">
+                  Nouvelle photo sélectionnée
+                </div>
+              </div>
+            </div>
+            <hr *ngIf="isEditing" />
+
+          
+            <div *ngIf="isEditing" class="row">
+              <div class="col-sm-12 d-flex justify-content-end gap-2">
+                <button class="btn btn-success" (click)="saveChanges()" [disabled]="!passwordsMatch()">
+                  Enregistrer
+                </button>
+            
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

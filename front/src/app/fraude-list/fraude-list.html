@@ -1,0 +1,38 @@
+<div class="container mt-4">
+  <h2>Liste des fraudes détectées</h2>
+
+  <div *ngIf="loading" class="alert alert-info">Chargement en cours...</div>
+  <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+
+  <table class="table table-bordered table-striped" *ngIf="!loading && !errorMessage && fraudes.length > 0">
+    <thead>
+      <tr>
+        <th>Utilisateur</th>
+        <th>Date</th>
+        <th>Rôle</th>
+        <th>Adresse</th>
+        <th>Message</th>
+        <th>Raisons</th> 
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let f of fraudes">
+        <td>{{ f.username }}</td>
+        <td>{{ f.date | date: 'medium' }}</td>
+        <td>{{ f.role }}</td>
+        <td>{{ f.adresse }}</td>
+        <td>{{ f.message }}</td>
+        <td>
+        <ul *ngIf="f.raisons && f.raisons.length > 0; else noRaisons">
+          <li *ngFor="let r of f.raisons">{{ r }}</li>
+        </ul>
+        <ng-template #noRaisons>—</ng-template>
+      </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="!loading && fraudes.length === 0" class="alert alert-warning">
+    Aucune fraude détectée.
+  </div>
+</div>

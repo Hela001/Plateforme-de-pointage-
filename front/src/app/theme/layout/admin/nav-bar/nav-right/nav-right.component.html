@@ -1,0 +1,55 @@
+<ul class="navbar-nav ms-auto">
+  <!-- Notification Dropdown -->
+  <li>
+    <div class="dropdown" ngbDropdown placement="auto">
+      <a ngbDropdownToggle href="javascript:">
+        <i class="icon feather icon-bell" title="Notification"></i>
+        <span class="badge bg-danger"><span class="sr-only"></span></span>
+      </a>
+      <div ngbDropdownMenu class="dropdown-menu dropdown-menu-end notification">
+        <!-- ... notifications ici ... -->
+      </div>
+    </div>
+  </li>
+
+  <!-- User Dropdown (Photo clique) -->
+  <li>
+    <div class="dropdown drp-user" ngbDropdown placement="bottom-end">
+      <img
+        *ngIf="currentUser"
+        [src]="'http://localhost:8081/users/photo/' + currentUser.id"
+        class="img-radius wid-40"
+        alt="User-Profile-Image"
+        ngbDropdownToggle
+        style="cursor: pointer;"
+      />
+
+      <div class="dropdown-menu dropdown-menu-end profile-notification" ngbDropdownMenu>
+        <div class="pro-head text-center">
+          <img
+            *ngIf="currentUser"
+            [src]="'http://localhost:8081/users/photo/' + currentUser?.id"
+            class="img-radius mb-2"
+            alt="User-Profile-Image"
+            style="width: 60px; height: 60px;"
+          />
+          <div><strong>{{ currentUser?.username }}</strong></div>
+        </div>
+
+        <ul class="pro-body">
+          <li>
+          <a [routerLink]="['./profile']" class="dropdown-item">
+       <i class="feather icon-user"></i> Profil
+          </a>
+
+          </li>
+          <li>
+            <a class="dropdown-item" (click)="logout()">
+              <i class="feather icon-log-out"></i> Déconnexion
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </li>
+</ul>

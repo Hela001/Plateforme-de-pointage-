@@ -1,0 +1,107 @@
+<!-- ⚙️ Actions -->
+<div class="d-flex justify-content-center my-3 gap-2">
+  <button class="btn btn-primary" (click)="fairePointage()" [disabled]="loading">
+    {{ loading ? 'Patientez...' : 'Faire pointage' }}
+  </button>
+
+  <button class="btn btn-outline-secondary" [class.active]="vue === 'liste'" (click)="vue = 'liste'">
+    Voir les Pointages
+  </button>
+   <button class="btn btn-warning" routerLink="/fraudes">
+    Voir les Fraudes
+  </button>
+</div>
+
+<!-- 🚨 Fraude vidéo uniquement -->
+<div *ngIf="fraudeVideo" class="alert alert-danger">
+  <p>🚨 Fraude vidéo détectée :</p>
+  <ul>
+    <li *ngFor="let r of raisonsVideo">{{ r }}</li>
+  </ul>
+</div>
+
+<!-- 📄 Formulaire de pointage -->
+<div *ngIf="vue === 'form'" class="p-3 border rounded shadow-sm">
+  <div *ngIf="error" class="text-danger mt-2">{{ error }}</div>
+
+  <div *ngIf="resultat" class="alert alert-info mt-3">
+    <p><strong>Utilisateur :</strong> {{ resultat.username || 'Inconnu' }}</p>
+    <p><strong>Statut :</strong> {{ resultat.statut || '-' }}</p>
+    <p><strong>Adresse :</strong> {{ resultat.adresse || '-' }}</p>
+
+    <div *ngIf="fraude" class="alert alert-danger fw-bold mt-3">
+      {{ message }}
+      <ul class="mt-2" *ngIf="raisonsFraude.length > 0">
+        <li *ngFor="let raison of raisonsFraude">🔎 {{ raison }}</li>
+      </ul>
+    </div>
+
+    <div *ngIf="!fraude && message" class="alert alert-success fw-bold mt-3">
+      {{ message }}
+    </div>
+  </div>
+</div>
+
+<!-- 📋 Liste des pointages -->
+<table *ngIf="pointages.length > 0" class="table table-bordered table-hover align-middle shadow">
+  <thead class="table-dark text-center">
+    <tr>
+      <th>Nom</th>
+      <th>Rôle</th>
+      <th>Adresse</th>
+      <th>Date</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let p of pointages">
+      <td>{{ p.username }}</td>
+      <td>{{ p.role }}</td>
+      <td style="max-width: 200px;">{{ p.adresse }}</td>
+      <td>{{ p.date_pointage ? (p.date_pointage | date:'dd/MM/yyyy') : 'Date invalide' }}</td>
+      <td class="text-center">
+        <button class="btn btn-sm btn-info" (click)="openDetails(p)">Voir détails</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- 🔍 Modal détails -->
+<div *ngIf="selectedPointage" class="modal fade show" style="display: block; background: rgba(0,0,0,0.5);">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Détails du pointage</h5>
+        <button type="button" class="btn-close" (click)="closeDetails()"></button>
+      </div>
+      <div class="modal-body">
+        <p><strong>Nom :</strong> {{ selectedPointage.username }}</p>
+        <p><strong>Rôle :</strong> {{ selectedPointage.role }}</p>
+        <p><strong>Adresse :</strong> {{ selectedPointage.adresse }}</p>
+        <p><strong>Date :</strong> 
+          {{ selectedPointage.date_pointage ? (selectedPointage.date_pointage | date:'dd MMMM yyyy') : 'Date invalide' }}
+        </p>
+
+        <div *ngIf="arrivees.length > 0">
+          <h6 class="text-success">Arrivées :</h6>
+          <ul class="list-group">
+            <li *ngFor="let a of arrivees" class="list-group-item">
+              {{ a.heure ? (a.heure | date:'shortTime') : 'Heure non disponible' }}
+            </li>
+          </ul>
+        </div>
+        <div *ngIf="arrivees.length === 0" class="text-muted">Aucune arrivée enregistrée.</div>
+
+        <div *ngIf="departs.length > 0" class="mt-3">
+          <h6 class="text-danger">Départs :</h6>
+          <ul class="list-group">
+            <li *ngFor="let d of departs" class="list-group-item">
+              {{ d.heure ? (d.heure | date:'shortTime') : 'Heure non disponible' }}
+            </li>
+          </ul>
+        </div>
+        <div *ngIf="departs.length === 0" class="text-muted">Aucun départ enregistré.</div>
+      </div>
+    </div>
+  </div>
+</div>
