@@ -1,0 +1,31 @@
+# Flask micro-API
+flask
+flask-cors
+python-dotenv
+
+# OpenAI + LangChain pour intégration IA
+openai
+langchain
+langchain-community
+
+# FAISS pour vector search
+faiss-cpu
+
+# Analyse vidéo et images
+numpy
+opencv-python
+pillow
+
+# PyTorch CPU (changer pour CUDA si GPU disponible)
+torch
+torchvision
+torchaudio
+
+# YOLOv8
+ultralytics
+
+# Progress bar
+tqdm
+pytesseract
+Pillow
+docx2txt
